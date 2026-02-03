@@ -35,6 +35,29 @@
         overflow:hidden;
       }
 
+
+
+        .photoFrame{
+          width: 100%;
+          max-width: 420px;
+          margin: 14px auto 0;
+          border-radius: 16px;
+          overflow: hidden;
+          background: #f3f3f3;
+          box-shadow: 0 14px 26px rgba(0,0,0,.12);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        
+        .photoFrame img{
+          width: 100%;
+          height: auto;           /* 🔥 keeps orientation correct */
+          max-height: 420px;      /* prevents super tall images */
+          object-fit: contain;    /* 🔥 NO CROPPING */
+          display: block;
+        }
+
       .wrap{
         width:min(720px, 92vw);
         padding:28px 0;
@@ -630,11 +653,13 @@
             </p>
             <p style="font-weight:950;">— Yours, always 😘</p>
 
-            <img
-              src="https://rahulgilda.github.io/valentine-for-jaann/IMG_2430.jpeg"
-              alt="Our photo"
-              class="placeholder"
-            />
+            <div class="photoFrame">
+              <img
+                src="https://rahulgilda.github.io/valentine-for-jaann/IMG_2430.jpeg"
+                alt="Our photo"
+              />
+            </div>
+
 
           <div class="navRow">
             <button class="miniBtn" id="markGift2DoneBtn">Done</button>
@@ -1104,6 +1129,7 @@
     </script>
   </body>
 </html>
+
 
 
 
