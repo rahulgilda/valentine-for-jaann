@@ -497,6 +497,53 @@
         color: rgba(0,0,0,.78);
         line-height: 1.35;
       }
+	  
+	  /* 💌 FINAL LETTER — make it BIG & emotional */
+		.finalLetter{
+		  width: 100%;
+		  max-width: 680px;   /* controls how big it can get */
+		  margin: 20px auto 10px;
+		  padding: 0;
+		  background: none;
+		  border: none;
+		  box-shadow: none;
+		}
+
+		.finalLetter img{
+		  width: 100%;
+		  height: auto;
+		  display: block;
+		  border-radius: 22px;
+		  box-shadow: 0 24px 50px rgba(0,0,0,.22);
+		}
+		
+		/* ✅ ONLY on Finally screen: make top heart/couple image smaller */
+		#card[data-screen="screenFinally"] .topImg{
+		  max-width: 140px;     /* smaller heart image */
+		}
+
+		#card[data-screen="screenFinally"] .topIcon{
+		  margin-bottom: 8px;   /* less gap */
+		}
+
+/* ✅ FINAL screen — clean, no gaps, letter-style */
+#card[data-screen="screenFinally"] .finalLetter{
+  width: 100%;
+  max-width: 460px;   /* narrower = feels taller */
+  margin: 10px auto 6px;
+  padding: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+#card[data-screen="screenFinally"] .finalLetter img{
+  width: 100%;
+  height: auto;        /* ✅ NO forced height */
+  display: block;
+  border-radius: 0;    /* sharp edges */
+  box-shadow: 0 22px 44px rgba(0,0,0,.22);
+}
     </style>
   </head>
 
@@ -682,16 +729,12 @@
         <div class="screen" id="screenFinally">
           <h1>Finally 💖</h1>
 
-          <div class="letter" style="text-align:center;">
-            <p style="font-weight:950; font-size:18px; margin-top: 6px;">
-              I love you jaaan 😘💕
-            </p>
-            <p>
-              You’re my favorite chaos, my cutest problem, and the best part of my everyday.
-              Happy Valentinen Day, my Jaannnn 💘
-            </p>
-            <p style="font-weight:950;">Now come here… mujhe hug chahiye 😤</p>
-          </div>
+			<div class="letter finalLetter">
+			  <img
+				src="https://raw.githubusercontent.com/rahulgilda/valentine-for-jaann/refs/heads/main/Letter.png"
+				alt="Love Letter"
+			  />
+			</div>
 
           <div class="navRow">
             <button class="miniBtn" id="finallyBackBtn">Back</button>
@@ -794,11 +837,13 @@
         [screenAsk, screenSuccess, screenGifts, screenQuiz, screenLetter, screenFinally]
           .forEach(s => s.classList.remove("on"));
       }
-      function showScreen(el){
-        allScreensOff();
-        el.classList.add("on");
-      }
+		function showScreen(el){
+		  allScreensOff();
+		  el.classList.add("on");
 
+		  // ✅ add this line so CSS can target the active screen
+		  card.setAttribute("data-screen", el.id);
+		}
       // ================== CONFETTI + SOUND ==================
       function launchConfetti(){
         confetti.innerHTML = "";
