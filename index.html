@@ -33,31 +33,29 @@
           radial-gradient(900px 600px at 90% 30%, rgba(255,255,255,.35), transparent 60%),
           linear-gradient(180deg, var(--bg1), var(--bg2));
         overflow-y: auto;
-		    overflow-x: hidden;
+        overflow-x: hidden;
       }
 
+      .photoFrame{
+        width: 100%;
+        max-width: 420px;
+        margin: 14px auto 0;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #f3f3f3;
+        box-shadow: 0 14px 26px rgba(0,0,0,.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-
-        .photoFrame{
-          width: 100%;
-          max-width: 420px;
-          margin: 14px auto 0;
-          border-radius: 16px;
-          overflow: hidden;
-          background: #f3f3f3;
-          box-shadow: 0 14px 26px rgba(0,0,0,.12);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        
-        .photoFrame img{
-          width: 100%;
-          height: auto;           /* 🔥 keeps orientation correct */
-          max-height: 420px;      /* prevents super tall images */
-          object-fit: contain;    /* 🔥 NO CROPPING */
-          display: block;
-        }
+      .photoFrame img{
+        width: 100%;
+        height: auto;
+        max-height: 420px;
+        object-fit: contain;
+        display: block;
+      }
 
       .wrap{
         width:min(720px, 92vw);
@@ -79,8 +77,8 @@
       }
 
       .topIcon{
-        width: auto;                 /* remove fixed width */
-        max-width: 220px;            /* safe upper bound */
+        width: auto;
+        max-width: 220px;
         margin: 0 auto 16px;
         display:flex;
         justify-content:center;
@@ -200,7 +198,7 @@
         letter-spacing:-.03em;
       }
 
-      /* smaller gif */
+      /* smaller gif box */
       .gif{
         width:min(300px, 86%);
         border-radius:16px;
@@ -209,8 +207,14 @@
         box-shadow: 0 16px 34px rgba(0,0,0,.16);
         background:#fff;
         display:none;
+        animation: pop 0.25s ease-out;
       }
       .gif img{ width:100%; height:auto; display:block; }
+
+      @keyframes pop {
+        from { transform: scale(0.92); opacity: 0; }
+        to   { transform: scale(1); opacity: 1; }
+      }
 
       .again{
         margin-top:14px;
@@ -232,7 +236,6 @@
       }
       .primaryCta:hover{ transform: translateY(-1px); }
 
-      /* confetti */
       .confetti{
         position:absolute;
         inset:0;
@@ -270,7 +273,6 @@
         background-repeat:no-repeat;
       }
 
-      /* no button shake */
       @keyframes shakeHard {
         0% { transform: translate(0,0) rotate(0deg) scale(var(--noScale, 1)); }
         10% { transform: translate(-3px, 2px) rotate(-2deg) scale(var(--noScale, 1)); }
@@ -299,11 +301,9 @@
       }
       @keyframes caretBlink{ 50%{ opacity:0; } }
 
-      /* screens */
       .screen{ display:none; }
       .screen.on{ display:block; }
 
-      /* ================= CLEAN GIFTS UI (like screenshot) ================= */
       .giftsPanel{
         margin-top: 12px;
         background: linear-gradient(180deg, rgba(255,215,231,.95), rgba(255,215,231,.70));
@@ -424,7 +424,6 @@
       }
       .miniBtn:hover{ transform: translateY(-1px); }
 
-      /* quiz + letter */
       .quizBox{
         text-align:left;
         width:min(440px, 100%);
@@ -498,15 +497,6 @@
         color: rgba(0,0,0,.78);
         line-height: 1.35;
       }
-      .placeholder{
-        margin-top: 12px;
-        padding: 12px 12px;
-        border-radius: 14px;
-        background: rgba(0,0,0,.04);
-        font-weight: 900;
-        color: rgba(0,0,0,.70);
-        text-align:center;
-      }
     </style>
   </head>
 
@@ -570,7 +560,7 @@
           </div>
         </div>
 
-        <!-- SCREEN: GIFTS (clean like screenshot) -->
+        <!-- SCREEN: GIFTS -->
         <div class="screen" id="screenGifts">
           <div class="giftsPanel">
             <div class="giftsTitle">Something for You</div>
@@ -578,7 +568,6 @@
             <div class="tiles">
               <div class="tile">
                 <div class="tilePreview">
-                  <!-- Replace with your gif -->
                   <img id="gift1Gif" alt="Gift 1 gif" src="https://rahulgilda.github.io/valentine-for-jaann/yawn.gif" />
                 </div>
                 <p class="tileLabel">Gift 1</p>
@@ -587,7 +576,6 @@
 
               <div class="tile">
                 <div class="tilePreview">
-                  <!-- Replace with your gif -->
                   <img id="gift2Gif" alt="Gift 2 gif" src="https://rahulgilda.github.io/valentine-for-jaann/brrr.gif" />
                 </div>
                 <p class="tileLabel">Gift 2</p>
@@ -635,6 +623,11 @@
             <button class="submitBtn" id="quizSubmit">Submit</button>
           </div>
 
+          <!-- ✅ Wrong-answer GIF shown at bottom (different per question) -->
+          <div class="gif" id="wrongGif">
+            <img id="wrongGifImg" src="" alt="Wrong answer gif" />
+          </div>
+
           <div class="navRow">
             <button class="miniBtn" id="quizBackBtn">Back</button>
           </div>
@@ -643,7 +636,7 @@
         <!-- SCREEN: LETTER (Gift 2) -->
         <div class="screen" id="screenLetter">
           <h1>Gift 2 💌</h1>
-        
+
           <div class="letter">
             <p>
               Jaann… you make my days softer and my life brighter. I’m grateful for you — for your smile,
@@ -654,20 +647,20 @@
               my safe place, and my most beautiful habit. 💕
             </p>
             <p style="font-weight:950;">— Yours, always 😘</p>
-        
+
             <div class="photoFrame">
               <img
                 src="https://rahulgilda.github.io/valentine-for-jaann/IMG_2430.jpeg"
                 alt="Our photo"
               />
             </div>
-          </div> <!-- ✅ CLOSE letter -->
-        
+          </div>
+
           <div class="navRow">
             <button class="miniBtn" id="markGift2DoneBtn">Done</button>
             <button class="miniBtn" id="letterBackBtn">Back</button>
           </div>
-        </div> <!-- ✅ CLOSE screenLetter -->
+        </div>
 
         <!-- SCREEN: FINALLY -->
         <div class="screen" id="screenFinally">
@@ -739,6 +732,10 @@
       const quizSubmit = document.getElementById("quizSubmit");
       const quizBackBtn = document.getElementById("quizBackBtn");
 
+      // ✅ wrong GIF elements
+      const wrongGif = document.getElementById("wrongGif");
+      const wrongGifImg = document.getElementById("wrongGifImg");
+
       const letterBackBtn = document.getElementById("letterBackBtn");
       const markGift2DoneBtn = document.getElementById("markGift2DoneBtn");
 
@@ -765,16 +762,13 @@
       let progress = loadProgress();
 
       function renderLocks(){
-        // Gift 1 always open
         giftBtn1.disabled = false;
         giftBtn1.textContent = progress.gift1Done ? "Open again" : "Open";
 
-        // Gift 2 locked until gift 1 done
         const g2Unlocked = progress.gift1Done;
         giftBtn2.disabled = !g2Unlocked;
         giftBtn2.textContent = g2Unlocked ? (progress.gift2Done ? "Open again" : "Open") : "Locked";
 
-        // Finally locked until gift 2 done
         const finallyUnlocked = progress.gift2Done;
         finalBtn.disabled = !finallyUnlocked;
       }
@@ -966,18 +960,15 @@
         renderLocks();
       });
 
-      // Gift 1 opens quiz
       giftBtn1.addEventListener("click", () => {
         setQuizQuestion(0);
         showScreen(screenQuiz);
       });
 
-      // Gift 2 opens letter
       giftBtn2.addEventListener("click", () => {
         showScreen(screenLetter);
       });
 
-      // Finally
       finalBtn.addEventListener("click", () => {
         showScreen(screenFinally);
       });
@@ -991,7 +982,8 @@
           B: "B. You",
           C: "C. Mummy",
           correct: "A",
-          wrongLine: "Oops you got it wrong jaan 🥺"
+          // ✅ placeholder gif for wrong answer (update later)
+          wrongGifSrc: "https://rahulgilda.github.io/valentine-for-jaann/brrr.gif"
         },
         {
           title: "One more 😏",
@@ -1000,10 +992,21 @@
           B: "B. You",
           C: "C. No one",
           correct: "A",
-          wrongLine: "Oops you got it wrong jaan 🥺"
+          // ✅ placeholder gif for wrong answer (update later)
+          wrongGifSrc: "https://rahulgilda.github.io/valentine-for-jaann/yawn.gif"
         }
       ];
       let quizIndex = 0;
+
+      function hideWrongGif(){
+        wrongGif.style.display = "none";
+        wrongGifImg.src = "";
+      }
+
+      function showWrongGif(src){
+        wrongGifImg.src = src;
+        wrongGif.style.display = "block";
+      }
 
       function setQuizQuestion(i){
         quizIndex = i;
@@ -1019,8 +1022,10 @@
         quizFeedback.style.display = "none";
         quizFeedback.textContent = "";
 
-        document.querySelectorAll('input[name="qOpt"]').forEach(r => r.checked = false);
+        // ✅ reset wrong gif for new question
+        hideWrongGif();
 
+        document.querySelectorAll('input[name="qOpt"]').forEach(r => r.checked = false);
         quizSubmit.textContent = (i === quiz.length - 1) ? "Finish" : "Next";
       }
 
@@ -1034,6 +1039,7 @@
         const choice = getSelectedOpt();
 
         if(!choice){
+          hideWrongGif();
           quizFeedback.className = "feedback bad";
           quizFeedback.textContent = "Choose an option first jaann 😤";
           quizFeedback.style.display = "block";
@@ -1041,12 +1047,14 @@
         }
 
         if(choice !== item.correct){
-          quizFeedback.className = "feedback bad";
-          quizFeedback.textContent = item.wrongLine;
-          quizFeedback.style.display = "block";
+          // ✅ WRONG: show gif at bottom, hide text
+          quizFeedback.style.display = "none";
+          showWrongGif(item.wrongGifSrc);
           return;
         }
 
+        // ✅ CORRECT: hide wrong gif, show good feedback
+        hideWrongGif();
         quizFeedback.className = "feedback good";
         quizFeedback.textContent = "Correct 😘";
         quizFeedback.style.display = "block";
@@ -1055,7 +1063,6 @@
           if(quizIndex < quiz.length - 1){
             setQuizQuestion(quizIndex + 1);
           }else{
-            // Gift 1 done -> unlock Gift 2
             progress.gift1Done = true;
             saveProgress(progress);
 
@@ -1067,6 +1074,7 @@
       });
 
       quizBackBtn.addEventListener("click", () => {
+        hideWrongGif();
         renderLocks();
         showScreen(screenGifts);
       });
@@ -1115,6 +1123,10 @@
 
         progress = { ...defaultProgress };
         saveProgress(progress);
+
+        // ✅ cleanup quiz gif too
+        hideWrongGif();
+
         showScreen(screenAsk);
       }
 
@@ -1131,15 +1143,3 @@
     </script>
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
