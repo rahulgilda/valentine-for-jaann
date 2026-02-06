@@ -552,6 +552,44 @@
   font-size: 16px;
   color: #c62828;
 }
+
+/* 🔄 FULL PAGE LOADER */
+#pageLoader{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: linear-gradient(180deg, #f7c6d9, #f2b9cf);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity .4s ease, visibility .4s ease;
+}
+
+#pageLoader.hidden{
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loaderBox{
+  text-align: center;
+  font-weight: 950;
+  color: #9c1045;
+}
+
+.loaderBox p{
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.heart{
+  font-size: 42px;
+  animation: beat 1s infinite;
+}
+
+@keyframes beat{
+  0%,100%{ transform: scale(1); }
+  50%{ transform: scale(1.25); }
+}
     </style>
   </head>
 
@@ -573,6 +611,16 @@
             class="topImg"
           />
         </div>
+
+
+<!-- 🔄 PAGE LOADER -->
+<div id="pageLoader">
+  <div class="loaderBox">
+    <div class="heart">💖</div>
+    <p>sabar karle</p>
+	    <p>Loading .....</p>
+  </div>
+</div>
 
         <!-- SCREEN: ASK -->
         <div class="screen" id="screenAsk">
@@ -1207,7 +1255,15 @@ quizBackBtn.addEventListener("click", () => {
 
       againBtn.addEventListener("click", resetAll);
       finallyReplayBtn.addEventListener("click", resetAll);
+// ================== PAGE LOADER ==================
+window.addEventListener("load", () => {
+  const loader = document.getElementById("pageLoader");
 
+  // small delay so it feels smooth, not abrupt
+  setTimeout(() => {
+    loader.classList.add("hidden");
+  }, 500);
+});
       // ================== BOOT ==================
       function init(){
         showScreen(screenAsk);
